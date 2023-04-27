@@ -7,7 +7,7 @@ logging steps:
 
 
 
-oc get clusterlogging/instance -n openshift-logging |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > efk-logging.yaml
+oc get clusterlogging/instance -n openshift-logging -oyaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > efk-logging.yaml
 
 oc patch clusterlogging/instance -n openshift-logging --type=merge -p '{"spec":{"managementState":"Unmanaged"}}'
 
