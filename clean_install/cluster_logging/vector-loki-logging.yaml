@@ -3,6 +3,12 @@ kind: ClusterLogging
 metadata:
   name: instance
   namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: clusterlogging-instance
+    cluster-logging/logstore: lokistack
+    cluster-logging/visualization: loki
+    cluster-logging/collection: vector
 spec:
   managementState: Managed
   logStore:
