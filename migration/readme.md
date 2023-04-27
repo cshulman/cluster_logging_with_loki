@@ -1,29 +1,29 @@
-
-**** Prerequisite: lokitest-v1 config successful ****
+**** Prerequisite: lokitest-v1 config successful & efk logging instance ****
 
 
 
 ------------------------
 logging steps:
 
-#Create logging instance with efk
-oc create -f elastic-kibana-fluentd-logging.yaml
+
+
+oc get clusterlogging/instance -n openshift-logging |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > efk-logging.yaml
 
 oc patch clusterlogging/instance -n openshift-logging --type=merge -p '{"spec":{"managementState":"Unmanaged"}}'
 
 Grab backups of og elastic & kibana
-oc -n openshift-logging get elasticsearch elasticsearch -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > elasticsearch-beforemod.yaml
-oc -n openshift-logging get kibana kibana -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > beforemod-kibana.yaml
+oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > elasticsearch-beforemod.yaml
+
+oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > beforemod-kibana.yaml
 
 Remove owner reference
 oc patch elasticsearch/elasticsearch -n openshift-logging  --type=merge -p '{"metadata":{"ownerReferences":[]}}'
 oc patch kibana/kibana -n openshift-logging  --type=merge -p '{"metadata":{"ownerReferences":[]}}'
 
 Grab backups of elastic & kibana AFTER owner ref is removed
-oc -n openshift-logging get elasticsearch elasticsearch -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > cr-elasticsearch.yaml
-oc -n openshift-logging get kibana kibana -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > cr-kibana.yaml
+oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > cr-elasticsearch.yaml
 
-
+oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > cr-kibana.yaml
 
 oc delete clusterlogging/instance -n openshift-logging
 
