@@ -1,0 +1,33 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogging
+metadata:
+  name: instance
+  namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: clusterlogging-instance
+    cluster-logging/logstore: lokistack
+    cluster-logging/visualization: kibana
+    cluster-logging/collection: fluentd
+spec:
+  managementState: Managed
+  logStore:
+    type: lokistack
+    lokistack:
+      name: gcs-logging-lokistack
+  visualization:
+    type: kibana
+    kibana:
+      replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io: logging
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io
+        value: logging
+  collection:
+    logs:
+      type: fluentd
+      fluentd:
+        tolerations:
+          - operator: Exists

@@ -1,0 +1,71 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: logging-loki
+  namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: lokistack
+    cluster-logging.lokistack/size: 1x.small
+spec:
+  size: 1x.small
+  storage:
+    schemas:
+    - version: v12
+      effectiveDate: '2022-06-01'
+    secret:
+      name: logging-loki-gcs
+      type: gcs
+  storageClassName: standard
+  tenants:
+    mode: openshift-logging
+  template:
+     compactor:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     distributor:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     gateway:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     indexGateway:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     ingester:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     querier:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule
+     queryFrontend:
+       nodeSelector: 
+         node-role.kubernetes.io: logging
+       tolerations:
+         - key: node-role.kubernetes.io
+           value: logging
+           effect: NoSchedule

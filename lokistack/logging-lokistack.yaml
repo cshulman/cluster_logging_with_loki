@@ -3,6 +3,10 @@ kind: LokiStack
 metadata:
   name: logging-loki
   namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: lokistack
+    cluster-logging.lokistack/size: 1x.small
 spec:
   size: 1x.small
   storage:

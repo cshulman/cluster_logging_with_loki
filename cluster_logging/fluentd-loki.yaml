@@ -7,7 +7,7 @@ metadata:
     component: cluster-logging
     cluster-logging/component: clusterlogging-instance
     cluster-logging/logstore: lokistack
-    cluster-logging/visualization: loki
+    cluster-logging/visualization: logging-view-plugin
     cluster-logging/collection: fluentd
 spec:
   managementState: Managed

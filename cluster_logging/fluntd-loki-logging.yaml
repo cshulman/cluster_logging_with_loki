@@ -7,8 +7,8 @@ metadata:
     component: cluster-logging
     cluster-logging/component: clusterlogging-instance
     cluster-logging/logstore: lokistack
-    cluster-logging/visualization: loki
-    cluster-logging/collection: vector
+    cluster-logging/visualization: logging-view-plugin
+    cluster-logging/collection: fluentd
 spec:
   managementState: Managed
   logStore:
@@ -16,4 +16,8 @@ spec:
     lokistack:
       name: logging-loki
   collection:
-    type: vector
+    logs:
+      type: fluentd
+      fluentd:
+        tolerations:
+          - operator: Exists # will deploy to ALL nodes, master + infra included

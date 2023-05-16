@@ -1,0 +1,21 @@
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogging
+metadata:
+  name: instance
+  namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: clusterlogging-instance
+    cluster-logging/logstore: lokistack
+    cluster-logging/visualization: logging-view-plugin
+    cluster-logging/collection: fluentd
+spec:
+  managementState: Managed
+  logStore:
+    type: lokistack
+    lokistack:
+      name: logging-loki
+  collection:
+    logs:
+      type: fluentd
+      fluentd: {}
