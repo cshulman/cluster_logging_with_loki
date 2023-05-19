@@ -27,6 +27,8 @@ gcloud storage buckets create gs://<bucket-name> --uniform-bucket-level-access -
 Grant service account storage admin role to bucket [3] [4]
 gcloud storage buckets add-iam-policy-binding gs://<bucket-name> --member=serviceAccount:<sa-name>@<project>.iam.gserviceaccount.com --role=roles/storage.objectAdmin 
 
+------ FOR GCS ONLY ------ 
+    *other examples available in docs[4]
 Create json key for Loki to auth via service account[4]
 gcloud iam service-accounts keys create <sa-name>.json --iam-account=<sa-name>@<project>.iam.gserviceaccount.com
 
