@@ -1,6 +1,18 @@
 
 **** Prerequisite: Scale nodes as needed ****
 
+-----------------------------------------
+**Prep Operator NS**
+
+./operator_installs/label-ns.sh 
+oc create -f operator_installs/openshift-operators-redhat-opgroup.yaml 
+oc create -f operator_installs/logging-subscription.yaml 
+oc create -f operator_installs/loki-subscription.yaml 
+
+**Install Operators*
+
+-----------------------------------------
+
 ----
 Operator installs:
 ---
@@ -13,15 +25,6 @@ oc create -f operator_installs/loki-subscription.yaml
 ---
 Create Lokistack:
 ---
-
-oc create secret generic <secret-name></secret-name> -n openshift-logging   \
---from-literal=bucketname="<bucket-name>"   \
---from-file=key.json="<json-key-file"
-
-oc create -f lokistack/oob-lokistack.yaml
-
-Wait till everything deploys & lokistack reports ready 
-oc describe lokistack -n openshift-logging 
 
 ----
 Create clusterLogging instance with lokistack & fluentd*

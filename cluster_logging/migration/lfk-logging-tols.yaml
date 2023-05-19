@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-logging
   labels:
     component: cluster-logging
-    cluster-logging/component: clusterlogging-instance
+    cluster-logging/component: logging-instance
     cluster-logging/logstore: lokistack
     cluster-logging/visualization: kibana
     cluster-logging/collection: fluentd
@@ -14,7 +14,7 @@ spec:
   logStore:
     type: lokistack
     lokistack:
-      name: gcs-logging-lokistack
+      name: logging-lokistack
   visualization:
     type: kibana
     kibana:

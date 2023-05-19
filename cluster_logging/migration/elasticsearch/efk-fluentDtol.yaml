@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-logging
   labels:
     component: cluster-logging
-    cluster-logging/component: clusterlogging-instance
+    cluster-logging/component: logging-instance
     cluster-logging/logstore: elasticsearch
     cluster-logging/visualization: kibana
     cluster-logging/collection: fluentd
@@ -13,7 +13,7 @@ spec:
   managementState: Managed
   logStore:
     type: elasticsearch
-    retentionPolicy:
+    retentionPolicy: 
       application:
         maxAge: 1d
       infra:
@@ -22,12 +22,6 @@ spec:
         maxAge: 7d
     elasticsearch:
       nodeCount: 3
-      nodeSelector:
-        node-role.kubernetes.io: logging
-      tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io
-        value: logging
       storage:
         storageClassName: standard
         size: 200G
@@ -41,21 +35,15 @@ spec:
           limits:
             memory: 256Mi
           requests:
-            memory: 256Mi
+             memory: 256Mi
       redundancyPolicy: SingleRedundancy
   visualization:
     type: kibana
     kibana:
       replicas: 1
-      nodeSelector:
-        node-role.kubernetes.io: logging
-      tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io
-        value: logging
   collection:
     logs:
       type: fluentd
       fluentd:
         tolerations:
-        - operator: Exists # will deploy to ALL nodes, master + infra included
+          - operator: Exists # will deploy to ALL nodes, master + infra included

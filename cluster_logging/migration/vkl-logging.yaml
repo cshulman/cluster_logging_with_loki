@@ -7,15 +7,17 @@ metadata:
     component: cluster-logging
     cluster-logging/component: clusterlogging-instance
     cluster-logging/logstore: lokistack
-    cluster-logging/visualization: logging-view-plugin
-    cluster-logging/collection: fluentd
+    cluster-logging/visualization: kibana
+    cluster-logging/collection: vector
 spec:
   managementState: Managed
   logStore:
     type: lokistack
     lokistack:
-      name: logging-loki
+      name: logging-lokistack
+  visualization:
+    type: kibana
+    kibana:
+      replicas: 1
   collection:
-    logs:
-      type: fluentd
-      fluentd: {}
+    type: vector

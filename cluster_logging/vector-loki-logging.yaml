@@ -8,16 +8,12 @@ metadata:
     cluster-logging/component: clusterlogging-instance
     cluster-logging/logstore: lokistack
     cluster-logging/visualization: logging-view-plugin
-    cluster-logging/collection: fluentd
+    cluster-logging/collection: vector
 spec:
   managementState: Managed
   logStore:
     type: lokistack
     lokistack:
-      name: logging-loki
+      name: logging-lokistack
   collection:
-    logs:
-      type: fluentd
-      fluentd:
-        tolerations:
-          - operator: Exists
+    type: vector

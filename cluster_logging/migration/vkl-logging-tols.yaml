@@ -14,10 +14,16 @@ spec:
   logStore:
     type: lokistack
     lokistack:
-      name: logging-loki
+      name: logging-lokistack
   visualization:
     type: kibana
     kibana:
       replicas: 1
+      nodeSelector:
+        node-role.kubernetes.io: logging
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io
+        value: logging
   collection:
     type: vector
