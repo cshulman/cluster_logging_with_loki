@@ -20,6 +20,21 @@ TODO
 add additional instances etc.
 
 -----------------------------------------
+
+**LOGGING VIEW PLUGIN**
+
+To view the cluster logs stored in the logging lokistack, the logging-view-plugin must be enabled
+oc patch consoles.operator.openshift.io cluster  --type=merge --patch '{ "spec": { "plugins": ["logging-view-plugin"] } }'
+
+Ensure console pods restarted
+oc get pods -n openshift-console| grep console
+-----------------------------------------
+
+If not, restart manually:
+for foo in `oc get pods -n openshift-console| grep console-| grep -v console-operator| awk '{ print $1 }' | grep -v NAME `; do oc delete pod $foo -n openshift-console & ;done
+
+
+-----------------------------------------
 **RESOURCES**
 
 https://docs.openshift.com/container-platform/4.12/logging/cluster-logging-loki.html#logging-loki-deploy_cluster-logging-loki
