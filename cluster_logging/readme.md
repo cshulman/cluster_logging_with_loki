@@ -6,7 +6,7 @@
 - cluster-logging & loki operators installed
 - logging-lokistack created
 
-
+-----------------------------------------
 ***CREATE CLUSTER LOGGING INSTANCE***
 
 Create cluster-logging instance with lokistack + vector
