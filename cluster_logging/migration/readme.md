@@ -11,19 +11,19 @@
 *OPTIONAL*
 **PRESERVING DEPRECATED ELEASTICSEARCH & KIBANA**
 
-***BACKUP ELASTICSEARCH & KIBANA INSTANCES ***
+*** BACKUP ELASTICSEARCH & KIBANA INSTANCES ***
 Grab backups of original cluster-logging instance, elastic & kibana (optional) [0]
 
-oc get clusterlogging/instance -n openshift-logging -oyaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > cluster_logging/backups/efk-logging.yaml
+oc get clusterlogging/instance -n openshift-logging -oyaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > backups/efk-logging.yaml
 
-oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > cluster_logging/backups/elasticsearch-beforemod.yaml
+oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > backups/elasticsearch-beforemod.yaml
 
-oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > cluster_logging/backups/beforemod-kibana.yaml
+oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > backups/beforemod-kibana.yaml
 
 -----------------------------------------
 -----------------------------------------
 *NO UPDATES OR GUARANTEES OF LOG AVAILABILITY AFTER REMOVAL*
-***REMOVE OWNER FROM ELEASTICSEARCH & KIBANA**
+***REMOVE OWNER FROM ELEASTICSEARCH & KIBANA***
 Patch operator to unmanaged
 oc patch clusterlogging/instance -n openshift-logging --type=merge -p '{"spec":{"managementState":"Unmanaged"}}'
 
@@ -37,8 +37,8 @@ oc patch kibana/kibana -n openshift-logging  --type=merge -p '{"metadata":{"owne
 *OPTIONAL (RECOMMENDED)*
 ***BACKUP DEPRECATED ELEASTICSEARCH & KIBANA INSTANCES***
 
-oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > cluster_logging/backups/cr-elasticsearch.yaml
-oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > cluster_logging/backups/cr-kibana.yaml
+oc get elasticsearch elasticsearch -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)'  > backups/cr-elasticsearch.yaml
+oc get kibana kibana -n openshift-logging -o yaml |yq 'del(.metadata.resourceVersion)|del(.metadata.uid)' |yq 'del(.metadata.generation)|del(.metadata.creationTimestamp)' |yq 'del(.metadata.selfLink)|del(.status)' > backups/cr-kibana.yaml
 
 -----------------------------------------
 *oc replace does not produce desired results*
