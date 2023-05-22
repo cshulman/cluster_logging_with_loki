@@ -8,8 +8,11 @@
 **GCP RESOURCE CREATION**
 
 Links/resources below
+-----------------------------------------
 
-gcloud env setup
+------ FOR GCS ONLY ------ 
+setup gcloud env:
+
 gcloud init
 
 (to login or check if logged in gcloud auth login, gcloud auth list)
@@ -21,24 +24,21 @@ gcloud config set project <project>
 Create service account [0]
 gcloud iam service-accounts create <sa-name> --description="description" --display-name=<sa-name>
 
-Create bucket[1]
+Create bucket [1] [2]
 gcloud storage buckets create gs://<bucket-name> --uniform-bucket-level-access --location=<region>
 
 Grant service account storage admin role to bucket [3] [4]
 gcloud storage buckets add-iam-policy-binding gs://<bucket-name> --member=serviceAccount:<sa-name>@<project>.iam.gserviceaccount.com --role=roles/storage.objectAdmin 
 
------------------------------------------
-
------- FOR GCS ONLY ------ 
-    *other examples available in docs[4]
-Create json key for Loki to auth via service account[4]
+Create json key for Loki to auth via service account [4]
 gcloud iam service-accounts keys create <sa-name>.json --iam-account=<sa-name>@<project>.iam.gserviceaccount.com
 
 -----------------------------------------
 
 **LOKISTACK CREATION**
 
-Create secret in OCP containing bucketname & referencing json key file  [5]
+Create secret in OCP containing bucketname & referencing json key file
+GCS ONLY. For other storage providers and the secret format required see [5]
 oc create secret generic <secret-name> -n openshift-logging  --from-literal=bucketname=<bucket-name> --from-file=key.json=<sa-name>.json 
 
 Create lokistack [6]
@@ -64,3 +64,9 @@ additional lokistacks: with node selectors, different sizes etc.
     or https://github.com/grafana/loki/blob/main/operator/docs/lokistack/object_storage.md#google-cloud-storage 
 [6] https://docs.openshift.com/container-platform/4.12/logging/cluster-logging-loki.html
     or https://docs.openshift.com/container-platform/4.12/logging/cluster-logging-loki.html#logging-loki-deploy_cluster-logging-loki
+
+
+
+gcloud storage buckets create gs://BUCKET_NAME --location=MULTI-REGION --placement=REGION_1,REGION_2
+
+https://cloud.google.com/storage/docs/use-dual-regions#create-dr-bucket
