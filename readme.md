@@ -1,18 +1,16 @@
-*TODO: REPO OVERVIEW*
+# *TODO: REPO OVERVIEW*
 -----------------------------------------
 
------------------------------------------
-
-**INSTALL LOGGING OPERATORS**
-
------------------------------------------
-
-
-**CREATE LOKISTACK**
-
+## **INSTALL LOGGING OPERATORS**
 
 -----------------------------------------
 
-**CLUSTER LOGGING W/ LOKI**
-    *Migrate cluster-logging from eleasticsearch to LokiStack*
-            *TODO:ELASTICSEARCH*
+
+## **CREATE LOKISTACK**
+
+
+-----------------------------------------
+
+## **CLUSTER LOGGING W/ LOKI**
+####   Migrate cluster-logging from eleasticsearch to LokiStack
+######     *TODO: ELASTICSEARCH*
