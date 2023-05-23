@@ -14,7 +14,7 @@ spec:
     - version: v12
       effectiveDate: '2022-06-01'
     secret:
-      name: sa-loki-22
+      name: <secret-name>
       type: gcs
   storageClassName: standard
   tenants:
