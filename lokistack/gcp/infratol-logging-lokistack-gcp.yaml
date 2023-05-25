@@ -16,7 +16,7 @@ spec:
     secret:
       name: <secret-name>
       type: gcs
-  storageClassName: standard
+  storageClassName: standard-csi
   tenants:
     mode: openshift-logging
   template:

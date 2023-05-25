@@ -14,7 +14,7 @@ spec:
     - version: v12
       effectiveDate: '2022-06-01'
     secret:
-      name: <secret-name>
+      name: mz-loki-sa
       type: gcs
   storageClassName: standard-csi
   tenants:
@@ -25,47 +25,47 @@ spec:
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      distributor:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      gateway:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      indexGateway:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      ingester:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      querier:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
      queryFrontend:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: node-role.kubernetes.io
-           value: logging
+           key: logging
+           value: 'true'
