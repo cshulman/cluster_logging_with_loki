@@ -14,9 +14,9 @@ spec:
     - version: v12
       effectiveDate: '2022-06-01'
     secret:
-      name: mz-loki-sa
+      name: <secret-name>
       type: gcs
-  storageClassName: standard-csi
+  storageClassName: standard
   tenants:
     mode: openshift-logging
   template:
