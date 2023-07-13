@@ -1,0 +1,78 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: logging-lokistack
+  namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: lokistack
+    cluster-logging.lokistack/size: 1x.small
+spec:
+  limits:
+    global:
+      ingestion:
+        perStreamRateLimit: 8 #3MB default
+        perStreamRateLimitBurst: 20 #15MB default
+        #ingestionBurstSize: 40 #20 default
+        #ingestionRate: 20 #15 default
+  size: 1x.small
+  storage:
+    schemas:
+    - version: v12
+      effectiveDate: '2022-06-01'
+    secret:
+      name: <secret-name>
+      type: gcs
+  storageClassName: standard
+  tenants:
+    mode: openshift-logging
+  template:
+     compactor:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     distributor:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     gateway:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     indexGateway:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     ingester:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     querier:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
+     queryFrontend:
+       nodeSelector: 
+         node-role.kubernetes.io/logging: ""
+       tolerations:
+         - effect: NoSchedule
+           key: logging
+           value: 'true'
