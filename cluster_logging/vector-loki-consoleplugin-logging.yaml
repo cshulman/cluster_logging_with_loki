@@ -15,6 +15,14 @@ spec:
     type: lokistack
     lokistack:
       name: logging-lokistack
+  visualization:
+    type: ocp-console
+    nodeSelector: 
+      node-role.kubernetes.io/logging: ""
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io
+      value: logging
   collection:
     logs:
       type: vector

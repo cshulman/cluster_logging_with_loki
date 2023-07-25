@@ -15,8 +15,3 @@ spec:
     type: lokistack
     lokistack:
       name: logging-lokistack
-  collection:
-    logs:
-      type: vector
-    tolerations:
-      - operator: Exists
