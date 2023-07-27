@@ -23,7 +23,7 @@ spec:
     secret:
       name: <secret-name>
       type: gcs
-  storageClassName: standard
+  storageClassName: standard-csi
   tenants:
     mode: openshift-logging
   template:
@@ -32,47 +32,47 @@ spec:
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      distributor:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      gateway:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      indexGateway:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      ingester:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      querier:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging
      queryFrontend:
        nodeSelector: 
          node-role.kubernetes.io/logging: ""
        tolerations:
          - effect: NoSchedule
-           key: logging
-           value: 'true'
+           key: node-role.kubernetes.io
+           value: logging

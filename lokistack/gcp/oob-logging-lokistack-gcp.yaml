@@ -1,0 +1,21 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: logging-lokistack
+  namespace: openshift-logging
+  labels:
+    component: cluster-logging
+    cluster-logging/component: lokistack
+    cluster-logging.lokistack/size: 1x.small
+spec:
+  size: 1x.small
+  storage:
+    schemas:
+    - version: v12
+      effectiveDate: '2022-06-01'
+    secret:
+      name: logging-loki-sa
+      type: gcs
+  storageClassName: standard-csi
+  tenants:
+    mode: openshift-logging

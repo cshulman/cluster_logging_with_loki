@@ -8,13 +8,20 @@ metadata:
     cluster-logging/component: lokistack
     cluster-logging.lokistack/size: 1x.small
 spec:
+  limits:
+    global:
+      ingestion:
+        perStreamRateLimit: 3 #3MB default
+        perStreamRateLimitBurst: 15 #15MB default
+        #ingestionBurstSize: 40 #20 default
+        #ingestionRate: 20 #15 default
   size: 1x.small
   storage:
     schemas:
     - version: v12
       effectiveDate: '2022-06-01'
     secret:
-      name: <secret-name>
+      name: secret-name
       type: gcs
   storageClassName: standard
   tenants:
