@@ -30,60 +30,31 @@ gcloud iam service-accounts keys create <sa-name>.json --iam-account=<sa-name>@<
 
 Create service account
 
-//[\^0] make sure to remove \
 ##### Create service account 
 ```sh
-  aws iam service-accounts create <sa-name> --description="description" --display-name=<sa-name>
+  aws iam service-accounts create <sa-name> --description="<description>" --display-name=<sa-name>
 ```
 
-//[\^1] make sure to remove \
 ##### Create s3 bucket 
 ```sh
   aws s3 api create-bucket --bucket <bucket-name> --region us-east-2 --create-bucket-configuration LocationConstraint=<aws-region>
 ```
 
-//[\^3] [\^4] make sure to remove \
 ##### Grant service account full access to bucket 
 ```sh
   aws iam put-user-policy --<sa-name> loki-bucket-sa --policy-name s3-full-access-policy --policy-document file://<path>/rosa-loki-bucket-policy.json
 ```
-(to confirm access)
-aws iam get-user-policy --user-name loki-bucket-sa --policy-name s3-full-access-policy
-
-Create access key 
-aws iam create-access-key --user-name loki-bucket-sa
 
 ### To verify policy placement
 ```sh
   aws iam get-user-policy --user-name <sa-name> --policy-name s3-full-access-policy
+
 ```
 ##### Create access key for Loki to auth via service account 
 ```sh
   aws iam create-access-key --user-name <sa-name>
 ```
 
-
-
-#### WIP
-
-From the access key created, note the SecretAccessKey &  AccessKeyId 
-
-Insert that information & the previously gathered bucketname, endpoint & region when creating the below secret 
-
-apiVersion: v1
-kind: Secret
-metadata:
-  name: logging-loki-s3
-  namespace: openshift-logging
-stringData:
-  access_key_id: AccessKeyId
-  access_key_secret: SecretAccessKey
-  bucketnames: bucketname
-  endpoint: endpoint
-  region: region
-
-Attach 
-aws iam attach-user-policy --user-name YourServiceAccount --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
 
 -----------------------------------------
 ## **Create LokiStack**
@@ -118,3 +89,25 @@ additional lokistacks: with node selectors, different sizes etc.
     or https://github.com/grafana/loki/blob/main/operator/docs/lokistack/object_storage.md#google-cloud-storage 
 [^6]: https://docs.openshift.com/container-platform/4.12/logging/cluster-logging-loki.html
     or https://docs.openshift.com/container-platform/4.12/logging/cluster-logging-loki.html#logging-loki-deploy_cluster-logging-loki
+
+
+## WIP
+
+From the access key created, note the SecretAccessKey &  AccessKeyId 
+
+Insert that information & the previously gathered bucketname, endpoint & region when creating the below secret 
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: logging-loki-s3
+  namespace: openshift-logging
+stringData:
+  access_key_id: AccessKeyId
+  access_key_secret: SecretAccessKey
+  bucketnames: bucketname
+  endpoint: endpoint
+  region: region
+
+Attach 
+aws iam attach-user-policy --user-name YourServiceAccount --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
